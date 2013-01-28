@@ -8,7 +8,7 @@ import datetime
 def archive(request):
     posts = JobsPost.objects.all()
     #db = DBConnectionPost.objects.all()
-    jobs = JobsRun.objects.filter(RunDate= datetime.date.today())  #以后要改取当天数据
+    jobs = JobsRun.objects.filter(RunDate=datetime.date.today())  #以后要改取当天数据
 
     t = loader.get_template('archive.html')
     c = Context({'posts':posts,'jobs':jobs})

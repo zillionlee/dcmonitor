@@ -27,19 +27,22 @@ class DBConnectionPostAdmin(admin.ModelAdmin):
 
 #任务计划
 class JobsPost(models.Model):
+    jobid = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50,verbose_name=u'标题')
     isusing = models.BooleanField(default=True,verbose_name=u'是否启用')
     sqltext = models.TextField()
-    description = models.CharField(max_length=200,blank=True,null=True,verbose_name=u'描述')
+    description = models.CharField(max_length=500,blank=True,null=True,verbose_name=u'描述')
     minvalue = models.BigIntegerField(default=1,verbose_name=u'最小正常值')
-    maxvalue = models.BigIntegerField(default=1000000000,verbose_name=u'最大正常值')
+    maxvalue = models.BigIntegerField(default=1000000000,verbose_name=u'最大正常值')    #1billion
     dbconnectionname = models.ForeignKey(DBConnectionPost,verbose_name=u'连接数据库')
     exectime = models.TimeField(verbose_name=u'执行时间')
     needsendmail = models.BooleanField(default=False,verbose_name=u'需要邮件提醒')
     manager = models.CharField(max_length=500,blank=True,null=True,verbose_name=u'收件人(请以“;”分割)')
+    def __unicode__(self):
+        return str(self.jobid)
     class Meta:
         ordering = ('-exectime',)
-        verbose_name_plural  = u'任务计划'
+        verbose_name_plural  = u'计划任务'
 
 class JobsPostAdmin(admin.ModelAdmin):
     list_display = ('title','description','sqltext','dbconnectionname','exectime')
@@ -56,7 +59,7 @@ class JobsRun(models.Model):
         unique_together = (("jobid","RunDate"),)
         verbose_name_plural  = u'任务执行情况'
 class JobsRunAdmin(admin.ModelAdmin):
-    list_display = ('id','jobid','RunDate',)
+    list_display = ('id','jobid','RunDate','warningmessage',)
     search_fields = ('-RunDate','-id')
 
 

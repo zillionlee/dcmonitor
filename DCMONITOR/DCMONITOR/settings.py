@@ -105,7 +105,7 @@ ROOT_URLCONF = 'DCMONITOR.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'DCMONITOR.wsgi.application'
 
-TEMPLATE_DIRS = ('F:/DCMONITOR/templates',)
+TEMPLATE_DIRS = ('F:/github/dcmonitor/DCMONITOR/templates',)
 
 INSTALLED_APPS = (
     'monitor',

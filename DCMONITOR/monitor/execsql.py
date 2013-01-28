@@ -1,5 +1,5 @@
 # coding=utf-8
-__author__ = 'ziliangl'
+
 from monitor.models import JobsPost,DBConnectionPost,JobsRun
 import threading
 import time
@@ -27,9 +27,9 @@ class EXECThread(threading.Thread):
             if dtime >= now:
                 timedel = (dtime - now).seconds
                 if timedel < self.interval*1.5 :
-                    self.timedict[job.id] = timedel
+                    self.timedict[job.jobid] = timedel
         print 'time   ',time.ctime(),self.timedict
-        print [job.id for job in Jobs]
+        print [job.jobid for job in Jobs]
 
         sortedlist = self.sorteddic(self.timedict)
         jobs = JobsRun.objects.filter(iswarning=True)
@@ -38,7 +38,7 @@ class EXECThread(threading.Thread):
         print 'sqlexec',time.ctime(),sortedlist
         for key in sortedlist:
             time.sleep(key[1])
-            job = JobsPost.objects.get(id=key[0])
+            job = JobsPost.objects.get(jobid=key[0])
             job_sqlcount = int(self.sqlexec(job))
             job_iswarning = False
             job_warningmessage2 = ''
@@ -71,7 +71,7 @@ class EXECThread(threading.Thread):
                 warningmessage=job_warningmessage )
             #----------发送邮件---------
             if job_iswarning==True and job.needsendmail==True:
-                send_mail(job.manager,"数据库监控",job_warningmessage)
+                send_mail(job.manager,str(job.title),job_warningmessage)
             #-------------------------
 
     def JobRuns_initialization(self):
@@ -80,14 +80,17 @@ class EXECThread(threading.Thread):
                 """
         Jobs = JobsPost.objects.filter(isusing=True)
         for job in Jobs:
-            jobrun = JobsRun.objects.filter(RunDate =datetime.date.today(),jobid=job )
-            if jobrun == []:
+            try:
+                jobrun = JobsRun.objects.get(RunDate =datetime.date.today(),jobid=job)
+            except JobsRun.DoesNotExist:
                 job_new = JobsRun(jobid=job,
                     iswarning=False,
                     RunDate = datetime.date.today(),
                     RunTime = datetime.datetime.now(),
                     warningmessage='未到达指定运行时间' )
                 job_new.save()
+            finally:
+                pass
 
     def run(self):
         self.JobRuns_initialization()

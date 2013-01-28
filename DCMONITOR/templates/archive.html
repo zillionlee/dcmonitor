@@ -7,7 +7,7 @@
         <p>{{ post.description }} &nbsp &nbsp &nbsp <b>执行时间：{{ post.exectime }}</b></p>
         <p>{{ post.sqltext }}</p>
         {% for job in jobs %}
-            {% ifequal post.id  job.jobid_id  %}
+            {% ifequal post.jobid  job.jobid_id  %}
                 {% if job.iswarning %}
                     <p><b><font color="#FF0000">{{ job.warningmessage }}</font></b></p>
                 {% else %}
