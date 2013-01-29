@@ -1,5 +1,5 @@
 # coding=utf-8
-
+import sys
 from monitor.models import JobsPost,DBConnectionPost,JobsRun
 import threading
 import time
@@ -70,8 +70,9 @@ class EXECThread(threading.Thread):
                 iswarning=job_iswarning,
                 warningmessage=job_warningmessage )
             #----------发送邮件---------
+            title = job.title
             if job_iswarning==True and job.needsendmail==True:
-                send_mail(job.manager,str(job.title),job_warningmessage)
+                send_mail(job.manager,title,job_warningmessage)
             #-------------------------
 
     def JobRuns_initialization(self):

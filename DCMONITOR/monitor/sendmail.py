@@ -3,8 +3,8 @@
 发送txt文本邮件
 '''
 import smtplib
+import sys
 from email.mime.text import MIMEText
-
 
 mail_host="220.181.12.17"  #设置服务器
 mail_user="gt_dcmonitor"    #用户名

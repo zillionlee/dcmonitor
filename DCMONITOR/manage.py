@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import sys
-import time
 
 
 if __name__ == "__main__":
