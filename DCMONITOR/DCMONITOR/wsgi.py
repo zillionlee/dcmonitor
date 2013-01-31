@@ -13,10 +13,10 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
-import os
+import os,sys
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DCMONITOR.settings")
-
+sys.path.append('/home/django/DCMONITOR')
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.

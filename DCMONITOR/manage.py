@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 import os
 import sys
 
@@ -8,7 +9,7 @@ if __name__ == "__main__":
 
 
     from monitor.execsql import RunThreading
-    t1 = RunThreading(300)
+    t1 = RunThreading(300)   #运行时间间隔
     t1.setDaemon(True)
     t1.start()
 

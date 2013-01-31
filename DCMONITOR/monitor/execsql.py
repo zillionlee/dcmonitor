@@ -26,7 +26,7 @@ class EXECThread(threading.Thread):
             dtime = datetime.datetime.strptime(dt+' '+str(job.exectime),'%Y-%m-%d %X')
             if dtime >= now:
                 timedel = (dtime - now).seconds
-                if timedel < self.interval*1.5 :
+                if timedel < self.interval+1 :
                     self.timedict[job.jobid] = timedel
         print 'time   ',time.ctime(),self.timedict
         print [job.jobid for job in Jobs]

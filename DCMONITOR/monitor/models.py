@@ -31,7 +31,7 @@ class JobsPost(models.Model):
     title = models.CharField(max_length=50,verbose_name=u'标题')
     isusing = models.BooleanField(default=True,verbose_name=u'是否启用')
     sqltext = models.TextField()
-    description = models.CharField(max_length=500,blank=True,null=True,verbose_name=u'描述')
+    description = models.TextField(blank=True,null=True,verbose_name=u'描述')
     minvalue = models.BigIntegerField(default=1,verbose_name=u'最小正常值')
     maxvalue = models.BigIntegerField(default=1000000000,verbose_name=u'最大正常值')    #1billion
     dbconnectionname = models.ForeignKey(DBConnectionPost,verbose_name=u'连接数据库')
@@ -56,11 +56,13 @@ class JobsRun(models.Model):
     RunTime = models.TimeField(blank=True,null=True,verbose_name=u'运行时间')
     warningmessage = models.CharField(max_length=500,blank=True,null=True,verbose_name=u'警告信息')
     class Meta:
+        ordering = ('-iswarning',)
         unique_together = (("jobid","RunDate"),)
         verbose_name_plural  = u'任务执行情况'
 class JobsRunAdmin(admin.ModelAdmin):
-    list_display = ('id','jobid','RunDate','warningmessage',)
-    search_fields = ('-RunDate','-id')
+    list_display = ('id','jobid','RunDate','RunTime','warningmessage',)
+    search_fields = ('RunDate','jobid','warningmessage',)
+
 
 
 admin.site.register(JobsPost,JobsPostAdmin)
