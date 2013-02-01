@@ -1,5 +1,5 @@
 # Django settings for DCMONITOR project.
-
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -105,8 +105,11 @@ ROOT_URLCONF = 'DCMONITOR.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'DCMONITOR.wsgi.application'
 
-TEMPLATE_DIRS = ('F:/github/dcmonitor/DCMONITOR/templates',)
-
+#TEMPLATE_DIRS = ('F:/github/dcmonitor/DCMONITOR/templates',)
+TEMPLATE_DIRS = (
+    'F:/github/dcmonitor/DCMONITOR/templates',
+    os.path.join(os.path.dirname(__file__),'templates').replace('\\','/'),
+    )
 INSTALLED_APPS = (
     'monitor',
     'django.contrib.auth',
