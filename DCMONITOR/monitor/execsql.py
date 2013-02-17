@@ -32,7 +32,7 @@ class EXECThread(threading.Thread):
         print [job.jobid for job in Jobs]
 
         sortedlist = self.sorteddic(self.timedict)
-        jobs = JobsRun.objects.filter(iswarning=True)
+        jobs = JobsRun.objects.filter(iswarning=True,RunDate=datetime.date.today())
         for i in jobs:
             sortedlist.append((i.jobid_id,0))
         print 'sqlexec',time.ctime(),sortedlist

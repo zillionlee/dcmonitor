@@ -29,7 +29,7 @@ def send_mail(to_list,sub,content):
         return False
 
 if __name__ == '__main__':
-    mailto_list=['ziliangl@gaotime.com','xiaochunc@gaotime.com']
+    mailto_list=['ziliangl@gaotime.com',]
     if send_mail(mailto_list,"hello","hello world！啦啦啦啦啦"):
         print "发送成功"
     else:
