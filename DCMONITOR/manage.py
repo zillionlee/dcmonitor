@@ -7,12 +7,6 @@ import sys
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DCMONITOR.settings")
 
-
-    from monitor.execsql import RunThreading
-    t1 = RunThreading(300)   #运行时间间隔
-    t1.setDaemon(True)
-    t1.start()
-
     from django.core.management import execute_from_command_line
     execute_from_command_line(sys.argv)
 

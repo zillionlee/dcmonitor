@@ -3,16 +3,24 @@
     {% for job in jobs %}
         {% for post in posts %}
             {% ifequal post.jobid  job.jobid_id  %}
-                <h2>{{ post.title }}</h2>
-                <p>{{ db.dbconnectionname }}</p>
-                <p>{{ post.timestamp|date:"Y-m-d H:i:s , l" }}</p>
-                <p>{{ post.description }} &nbsp &nbsp &nbsp <b>执行时间：{{ post.exectime }}</b></p>
-                <p>{{ post.sqltext }}</p>
-                {% if job.iswarning %}
-                    <p><b><font color="#FF0000">{{ job.warningmessage }}</font></b></p>
-                {% else %}
-                    <p><b>{{ job.warningmessage }}</b></p>
-                {% endif %}
+                <div class="row">
+                    <div class="alert alert-info">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ db.dbconnectionname }}</p>
+                        <p>{{ post.timestamp|date:"Y-m-d H:i:s , l" }}</p>
+                        <p>{{ post.description }} &nbsp &nbsp &nbsp <b>执行时间：{{ post.exectime }}</b></p>
+                        <p>{{ post.sqltext }}</p>
+                        {% if job.iswarning %}
+                            <div class="alert alert-error">
+                                <p><strong>{{ job.warningmessage }}</strong></p>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success">
+                                <p><b>{{ job.warningmessage }}</b></p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             {% endifequal %}
         {% endfor %}
     {% endfor %}

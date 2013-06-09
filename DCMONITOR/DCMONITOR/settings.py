@@ -1,3 +1,4 @@
+#coding:utf-8
 # Django settings for DCMONITOR project.
 import os
 
@@ -9,16 +10,17 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+#项目文件夹
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 DJANGO_SETTINGS_MODULE = 'DCMONITOR.settings'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'dcmonitor',                      # Or path to database file if using sqlite3.
-        'USER': 'dcmonitor',                      # Not used with sqlite3.
-        'PASSWORD': 'dcmonitor',                  # Not used with sqlite3.
-        'HOST': '172.17.11.158',                  # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'dcjobs',                      # Or path to database file if using sqlite3.
+        'USER': 'dcjobs',                      # Not used with sqlite3.
+        'PASSWORD': 'dcjobs',                  # Not used with sqlite3.
+        'HOST': '127.0.0.1',                  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -59,7 +61,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT =os.path.join(PROJECT_PATH,'www/').replace('\\','/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -105,13 +107,10 @@ ROOT_URLCONF = 'DCMONITOR.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'DCMONITOR.wsgi.application'
 
-#TEMPLATE_DIRS = ('F:/github/dcmonitor/DCMONITOR/templates',)
 TEMPLATE_DIRS = (
-    'F:/github/dcmonitor/DCMONITOR/templates',
-    os.path.join(os.path.dirname(__file__),'templates').replace('\\','/'),
+    os.path.join(PROJECT_PATH,'/../monitor/templates/').replace('\\','/'),
     )
 INSTALLED_APPS = (
-    'monitor',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -122,7 +121,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-
+    'monitor',
 
 )
 

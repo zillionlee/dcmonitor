@@ -20,10 +20,22 @@ class DBConnectionPost(models.Model):
         return self.dbconnectionname
     class Meta:
         verbose_name_plural  = u'数据库连接管理'
-
 class DBConnectionPostAdmin(admin.ModelAdmin):
     list_display = ('dbconnectionname','dbengine','dbuser','dbhost','dbport')
     search_fields = ('dbhost','dbconnectionname','dbuser',)
+
+#星期
+class WorkDays(models.Model):
+    days = models.CharField(max_length=10,verbose_name=u'星期')
+    daysnum = models.IntegerField(verbose_name=u'星期代码')
+    def __unicode__(self):
+        return self.days
+    class Meta:
+        #ordering = ('-exectime',)
+        verbose_name_plural  = u'星期'
+class WorkDaysAdmin(admin.ModelAdmin):
+    list_display = ('id','days','daysnum',)
+    #search_fields = ('warningmessage',)
 
 #任务计划
 class JobsPost(models.Model):
@@ -36,6 +48,7 @@ class JobsPost(models.Model):
     maxvalue = models.BigIntegerField(default=1000000000,verbose_name=u'最大正常值')    #1billion
     dbconnectionname = models.ForeignKey(DBConnectionPost,verbose_name=u'连接数据库')
     exectime = models.TimeField(verbose_name=u'执行时间')
+    execdate = models.ManyToManyField(WorkDays,related_name='execdates',verbose_name=u'执行日期')
     needsendmail = models.BooleanField(default=False,verbose_name=u'需要邮件提醒')
     manager = models.CharField(max_length=500,blank=True,null=True,verbose_name=u'收件人(请以“;”分割)')
     def __unicode__(self):
@@ -45,7 +58,7 @@ class JobsPost(models.Model):
         verbose_name_plural  = u'计划任务'
 
 class JobsPostAdmin(admin.ModelAdmin):
-    list_display = ('title','description','sqltext','dbconnectionname','exectime')
+    list_display = ('title','description','sqltext','dbconnectionname','exectime',)
     search_fields = ('description','sqltext','title',)
 
 #这个要改，记录每天的job运行情况
@@ -60,11 +73,12 @@ class JobsRun(models.Model):
         unique_together = (("jobid","RunDate"),)
         verbose_name_plural  = u'任务执行情况'
 class JobsRunAdmin(admin.ModelAdmin):
-    list_display = ('id','jobid','RunDate','RunTime','warningmessage',)
-    search_fields = ('RunDate','jobid','warningmessage',)
+    list_display = ('id','jobid','RunDate','RunTime','warningmessage','iswarning')
+    search_fields = ('warningmessage',)
 
 
 
 admin.site.register(JobsPost,JobsPostAdmin)
 admin.site.register(DBConnectionPost,DBConnectionPostAdmin)
 admin.site.register(JobsRun,JobsRunAdmin)
+admin.site.register(WorkDays,WorkDaysAdmin)

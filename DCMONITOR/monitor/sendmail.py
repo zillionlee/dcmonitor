@@ -7,8 +7,8 @@ import sys
 from email.mime.text import MIMEText
 
 mail_host="220.181.12.17"  #设置服务器
-mail_user="gt_dcmonitor"    #用户名
-mail_pass="gaotime123"   #口令
+mail_user="123"    #用户名
+mail_pass="123"   #口令
 mail_postfix="163.com"  #发件箱的后缀
 
 def send_mail(to_list,sub,content):
@@ -29,7 +29,7 @@ def send_mail(to_list,sub,content):
         return False
 
 if __name__ == '__main__':
-    mailto_list=['ziliangl@gaotime.com',]
+    mailto_list=['abc@gmail.com',]
     if send_mail(mailto_list,"hello","hello world！啦啦啦啦啦"):
         print "发送成功"
     else:
